@@ -1,0 +1,84 @@
+#include <stdio.h>
+char arr[100];
+int top1=-1,top2=100;
+int order(char s)
+{
+    if(s=='(') return 0;
+    if(s=='*'||s=='/') return 2;
+    else return 1;
+}
+int pop1()
+{
+    top1--;
+}
+int pop2()
+{
+    top2++;
+}
+int push1(int no)
+{
+    top1++;
+    arr[top1]=no;
+}
+int push2(int no)
+{
+    top2--;
+    arr[top2]=no;
+}
+void post(char s)
+{
+    if(s>='0'&&s<='9') push2(s);
+    else if(s=='(') push1(s);
+    else if(s==')')
+    {
+        while(arr[top1]!='(')
+        {
+            push2(arr[top1]);
+            pop1();
+        }
+        pop1();
+    }
+    else
+    {
+        if(top1==-1||order(arr[top1])<order(s)) push1(s);
+        else
+        {
+            while(order(arr[top1])>=order(s)&&top1!=-1)
+            {
+                push2(arr[top1]);
+                pop1();
+            }
+            push1(s);
+        }
+    }
+}
+int main() {
+	char s[100];
+	int n,i;
+	scanf("%d",&n);
+	for(i=0;i<n;++i)
+	{
+	    top1=-1;
+	    top2=100;
+	    scanf("%s",s);
+	    int j=0;
+	    while(s[j]!='\0')
+	    {
+	        post(s[j]);
+	        j++;
+	    }
+	    while(top1!=-1)
+	    {
+	        push2(arr[top1]);
+	       pop1();
+	    }
+	    for(j=99;j!=top2-1;--j) 
+	    {
+	        printf("%c",arr[j]);
+	        arr[j]='\0';
+	    }
+	    printf("\n");
+	}
+	
+	return 0;
+}

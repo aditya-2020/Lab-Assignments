@@ -1,0 +1,90 @@
+#include <iostream>
+#include <string.h>
+using namespace std;
+
+int *laptop;
+int i=0;
+int n,m;
+
+struct node
+{
+    char name[15];
+    node *p;
+}*start,*newbie,*rear,*tmp;
+
+void add()
+{
+    char where[2];
+    
+    newbie=new node;
+    
+    cin>>newbie->name;
+    cin>>where;
+    newbie->p=NULL;
+    
+    if(start==NULL)
+        start=rear=newbie;
+    else 
+    {
+        rear->p=newbie;    
+        rear=newbie;
+    }
+    
+    if(where[0]=='P') laptop[i++]=1;
+    else laptop[i++]=0;
+}
+
+void display()
+{
+    int i=0;
+    
+    tmp=start;
+    
+    while(tmp!=NULL)
+    {
+        if(laptop[i++]!=2)
+            cout<<tmp->name<<" ";
+        tmp=tmp->p;
+    }
+    cout<<"\n";
+}
+
+void erase()
+{
+    tmp=start;
+    
+    while(tmp!=NULL)
+    {
+        start=start->p;
+        delete tmp;
+        tmp=start;
+    }
+}
+
+void del()
+{
+    for(int i=0;i<n;++i)
+        if(laptop[i]==1) laptop[i]=2;
+}
+int main() {
+	char todo[8];
+	
+	start=NULL;
+	rear=NULL;
+	cin>>n>>m;
+	
+	laptop= new int[n];
+	
+	for(int i=0;i<m;++i)
+	{
+	    cin>>todo;
+	    if(strcmp(todo,"ADD")==0) add();
+	    else if(strcmp(todo,"DISPLAY")==0) display();
+	    else del();
+	}
+	
+	delete[] laptop;
+	erase();
+	
+	return 0;
+}

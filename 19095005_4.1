@@ -1,0 +1,68 @@
+#include <iostream>
+#include <string.h>
+using namespace std;
+
+int n,m,a[52]={0},front=52,rear=-1;
+
+int addfront()
+{
+    int num;
+    cin>>num;
+    front--;
+    a[front]=num;    
+}
+int addrear()
+{
+    int num;
+    cin>>num;
+    rear++;
+    a[rear]=num;
+}
+int drawfront()
+{
+    cout<<a[front]<<" ";
+    front++;
+}
+int drawrear()
+{
+    cout<<a[rear]<<" ";
+    rear--;
+}
+int peekfront()
+{
+    cout<<a[front]<<" ";
+}
+int peekrear()
+{
+    cout<<a[rear]<<" ";
+}
+void isempty()
+{
+    if(front==52&&rear==-1) cout<<"yes ";
+    else cout<<"no ";
+}
+void isfull()
+{
+    if(front-rear==1)  cout<<"yes ";
+    else cout<<"no ";
+}
+int main() {
+	
+	char s[25];
+	cin>>n>>m;
+	rear=n-1;
+	
+	for(int i=0;i<m;++i)
+	{
+	    cin>>s;
+	    if(!strcmp(s,"addFront")) addfront();
+        if(!strcmp(s,"addRear")) addrear();
+        if(!strcmp(s,"DrawFront")) drawfront();
+        if(!strcmp(s,"DrawRear")) drawrear();
+        if(!strcmp(s,"PeekFront")) peekfront();
+        if(!strcmp(s,"PeekRear")) peekrear();
+        if(!strcmp(s,"IsEmpty")) isempty();
+        if(!strcmp(s,"IsFull")) isfull();
+	}
+	return 0;
+}
